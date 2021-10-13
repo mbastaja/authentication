@@ -13,13 +13,14 @@ function loginUser(param, result) {
             if (err) throw err;
             // result(null, user)
             hash = user[0].password
-            userId = user.id
+            userId = user[0].id
             // console.log(param.password);
             let compare = bcrypt.compare(param.password, hash, (bErr, bResult) => {
                 if (bResult) {
-                    token = jwt.sign({ id: userId }, 'the-super-strong-secret', { expiresIn: '2h' })
-                    console.log(hash);
-                    console.log(param.password);
+                    let payload = { "id": userId }
+                    token = jwt.sign(payload, 'the-super-strong-secret', { expiresIn: '2h' })
+                    // console.log(hash);
+                    // console.log(param.password);
                     console.log(token);
                     result(null, token)
                 }
