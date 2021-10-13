@@ -4,18 +4,37 @@ const conn = require('../db-config/database')
 let User = function (user) {
     this.username = user.username;
     this.password = user.password;
+    this.fullname = user.fullname;
+    this.email = user.email;
 }
 
-User.register = function (newUser, result) {
+User.create = function (newUser, result) {
+    console.log('create');
     conn.query('insert into users set ?', newUser, function (err, res) {
-        if(err) {
-            console.log("error: ", err);
+        if (err) {
             result(err, null)
         }
         else {
-            console.log(res.insertId);
             result(null, res.insertId);
         }
     })
+}
+User.getUsers = (result) => {
+    conn.query('select * from users'), function (err, res, fields) {
+        if (err) {
+            result(err, null)
+        }
+        else {
+            console.log('baza');
+            result(null, res)
+        }
+    }
+}
+User.getUsername = (username, result) => {
+    conn.query("select * from users where username=?",
+        username, function (err, res, fields) {
+            if (err) throw err;
+            result(null, res);
+        })
 }
 module.exports = User
