@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {body} = require('express-validator')
 const {register} = require('../controllers/registerController')
-// const {login} = require('../controllers/loginController')
+const {login} = require('../controllers/loginController')
 const {getUsers} = require('../controllers/getUsersController')
 const {getUser} = require('../controllers/getUserController')
 
@@ -38,6 +38,8 @@ router.post('/register', [
 //     .trim()
 //     .isLength({ min: 8 }),
 // ], login)
+
+router.post('/login', login)
 
 router.get('/getusers', getUsers)
 router.get('/getuser/:id', getUser)
