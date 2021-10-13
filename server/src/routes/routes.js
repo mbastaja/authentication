@@ -3,6 +3,7 @@ const {body} = require('express-validator')
 const {register} = require('../controllers/registerController')
 // const {login} = require('../controllers/loginController')
 const {getUsers} = require('../controllers/getUsersController')
+const {getUser} = require('../controllers/getUserController')
 
 router.post('/register', [
     body('username', "The username must be of minimum 5 characters lenght")
@@ -38,6 +39,7 @@ router.post('/register', [
 //     .isLength({ min: 8 }),
 // ], login)
 
-router.get('/getuser', getUsers)
+router.get('/getusers', getUsers)
+router.get('/getuser/:id', getUser)
 
 module.exports = router
