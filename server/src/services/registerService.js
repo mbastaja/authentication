@@ -14,7 +14,7 @@ async function registerUser(param, result) {
     User.create(params, function (err, user) {
         if (err) throw err;
         console.log(user);
-        result(null, result);
+        result(null, user);
     })
 }
 module.exports = registerUser
