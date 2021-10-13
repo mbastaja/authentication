@@ -1,5 +1,5 @@
 const RegisterService = require('../services/registerService')
-const checkService = require('../services/checkService')
+const CheckService = require('../services/checkService')
 const validationService = require('../services/validation')
 
 
@@ -14,7 +14,7 @@ exports.register = async (req, res, next) => {
     //         return res.status(422).json({ errors: result.array() })
     //     }
     //     else {
-            checkService(req.body.username, function (err, result) {
+            CheckService(req.body.username, function (err, result) {
                 if (err) {
                     throw err
                 }
@@ -26,7 +26,7 @@ exports.register = async (req, res, next) => {
                 else {
                     RegisterService(req.body, function (err, user) {
                         if (err) throw err
-                        res.status(201).json({ error: false, message: `The user has been added successfully!`, data: user })
+                        res.status(201).json({ error: false, message: `The user with ID: ${user} has been added successfully!`})
 
                     })
                 }
