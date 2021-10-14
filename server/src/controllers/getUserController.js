@@ -1,12 +1,23 @@
 const GetUserService = require('../services/getUserService')
+const GetTokenService = require('../services/getTokenService')
 
 exports.getUser = (req, res, next) => {
-    GetUserService(req.body.id, function (err, result) {
-        if (err) {
-            throw err
-        }
-        else {
-            res.status(200).json({ data: result })
-        }
-    })
+    // GetTokenService(req, function (err, decoded) {
+    //     console.log(decoded +' nema');
+    if (req.decoded) {
+        GetUserService(req.decoded.id, function (err, result) {
+            if (err) {
+                throw err
+            }
+            else {
+                console.log('milos');
+                res.status(200).json({ message: 'Fetch successful!', data: result })
+            }
+        })
+    }
+    else {
+        console.log('milo');
+        res.status(422).json({ message: 'Please provide the token' })
+    }
+    // })
 }
