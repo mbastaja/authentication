@@ -9,7 +9,6 @@ let User = function (user) {
 }
 
 User.create = function (newUser, result) {
-    console.log('create');
     conn.query('insert into users set ?', newUser, function (err, res) {
         if (err) {
             result(err, null)
@@ -20,15 +19,14 @@ User.create = function (newUser, result) {
     })
 }
 User.getUsers = (result) => {
-    conn.query('select * from users'), function (err, res, fields) {
+    conn.query('select * from users', function (err, res, fields) {
         if (err) {
             result(err, null)
         }
         else {
-            console.log('baza');
             result(null, res)
         }
-    }
+    })
 }
 User.getUsername = (username, result) => {
     conn.query("select * from users where username=?",

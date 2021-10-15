@@ -15,7 +15,6 @@ exports.register = async (req, res, next) => {
     //     }
     //     else {
             checkService(req.body.username, function (err, result) {
-                console.log(result);
                 if (err) {
                     throw err
                 }
