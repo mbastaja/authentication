@@ -35,4 +35,10 @@ User.getUsername = (username, result) => {
             result(null, res);
         })
 }
+User.getUserById = (id, result) => {
+    conn.query(`select fullname, username, email, password from users where id=?`, id, function (err, res, fields) {
+        if (err) throw err;
+        result(null, res);
+    })
+}
 module.exports = User
