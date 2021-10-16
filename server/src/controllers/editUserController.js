@@ -1,9 +1,7 @@
 const EditUserService = require('../services/editUserService')
 const CheckUsernameService = require('../services/checkUsernameService')
 const CheckEmailService = require('../services/checkEmailService')
-// const validationService = require('../services/validation')
 const GetUserService = require('../services/getUserService')
-
 
 exports.edit = async (req, res, next) => {
     let currentUsername = '';

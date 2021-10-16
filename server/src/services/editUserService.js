@@ -12,16 +12,12 @@ async function editUser(param, result) {
         email: param.body.email,
         id: param.decoded.id
     }
-    console.log(params);
     User.update(params, function (err, user) {
-        console.log('user.update');
         if (err) throw err
         if(user){
-            console.log('if user');
             result(null, user)
         }
         else{
-            console.log('else');
             result(err, null)
         }
     })
