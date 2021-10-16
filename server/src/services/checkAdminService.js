@@ -6,7 +6,8 @@ function getById(id, result) {
 
             if (err) throw err;
 
-            else if (role[0].role === "admin") {
+            else if (role[0].role === "admin" ||
+                role[0].role === "super") {
                 result(null, role)
             }
             else {
