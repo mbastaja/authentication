@@ -19,19 +19,17 @@ User.create = function (newUser, result) {
     })
 }
 User.update = function (updateUser, result) {
-    console.log(JSON.stringify(updateUser) + "ovde");
     conn.query('update users set ? where id = ?', [updateUser, updateUser.id], function (err, res) {
         if (err) {
             result(err, null)
         }
         else {
-            console.log(res);
             result(null, res);
         }
     })
 }
 User.getUsers = (result) => {
-    conn.query('select * from users', function (err, res, fields) {
+    conn.query('select id, username, fullname, email, password, role from users', function (err, res, fields) {
         if (err) {
             result(err, null)
         }
@@ -43,6 +41,13 @@ User.getUsers = (result) => {
 User.getUsername = (username, result) => {
     conn.query("select * from users where username=?",
         username, function (err, res, fields) {
+            if (err) throw err;
+            result(null, res);
+        })
+}
+User.delete = (id, result) => {
+    conn.query("delete from users where id = ?",
+        id, function (err, res, fields) {
             if (err) throw err;
             result(null, res);
         })
@@ -62,6 +67,24 @@ User.getUserById = (id, result) => {
 }
 User.getAdminRole = (id, result) => {
     conn.query(`select role from users where id=?`, id, function (err, res, fields) {
+        if (err) throw err;
+        result(null, res);
+    })
+}
+User.updateToken = function (params, result) {
+    let userId = params.id
+    let token = params.token
+    conn.query('update users set refreshToken = ? where id = ?', [token, userId], function (err, res) {
+        if (err) {
+            result(err, null)
+        }
+        else {
+            result(null, res);
+        }
+    })
+}
+User.getToken = (id, result) => {
+    conn.query(`select refreshToken from users where id=?`, id, function (err, res, fields) {
         if (err) throw err;
         result(null, res);
     })
