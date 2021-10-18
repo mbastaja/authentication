@@ -18,6 +18,18 @@ User.create = function (newUser, result) {
         }
     })
 }
+User.update = function (updateUser, result) {
+    console.log(JSON.stringify(updateUser) + "ovde");
+    conn.query('update users set ? where id = ?', [updateUser, updateUser.id], function (err, res) {
+        if (err) {
+            result(err, null)
+        }
+        else {
+            console.log(res);
+            result(null, res);
+        }
+    })
+}
 User.getUsers = (result) => {
     conn.query('select * from users', function (err, res, fields) {
         if (err) {
@@ -35,8 +47,21 @@ User.getUsername = (username, result) => {
             result(null, res);
         })
 }
+User.getEmail = (email, result) => {
+    conn.query("select * from users where email=?",
+        email, function (err, res, fields) {
+            if (err) throw err;
+            result(null, res);
+        })
+}
 User.getUserById = (id, result) => {
-    conn.query(`select fullname, username, email, password from users where id=?`, id, function (err, res, fields) {
+    conn.query(`select id, fullname, username, email, password from users where id=?`, id, function (err, res, fields) {
+        if (err) throw err;
+        result(null, res);
+    })
+}
+User.getAdminRole = (id, result) => {
+    conn.query(`select role from users where id=?`, id, function (err, res, fields) {
         if (err) throw err;
         result(null, res);
     })

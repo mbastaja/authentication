@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {body} = require('express-validator')
 const {register} = require('../controllers/registerController')
 const {login} = require('../controllers/loginController')
+const {edit} = require('../controllers/editUserController')
 const {getUsers} = require('../controllers/getUsersController')
 const {getUser} = require('../controllers/getUserController')
 
@@ -42,6 +43,8 @@ router.post('/register', [
 router.post('/login', login)
 
 router.get('/getusers', getUsers)
-router.get('/getuser/:id', getUser)
+router.post('/getuser', getUser)
+
+router.patch('/edit', edit)
 
 module.exports = router
