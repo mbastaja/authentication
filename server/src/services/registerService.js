@@ -1,4 +1,3 @@
-// const conn = require('../db-config/database')
 const bcrypt = require('bcryptjs')
 const User = require('../models/models')
 
@@ -10,6 +9,7 @@ async function registerUser(param, result) {
         password: hashPass,
         fullname: param.fullname,
         email: param.email,
+        role: "user"
     }
     User.create(params, function (err, user) {
         if (err) throw err;
