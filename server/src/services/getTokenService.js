@@ -4,7 +4,6 @@ function getToken(param, result) {
     if (!param.headers.authorization ||
         !param.headers.authorization.startsWith('Bearer') ||
         !param.headers.authorization.split(' ')[1]) {
-        console.log('ovde');
         result(null);
     }
     const token = param.headers.authorization.split(' ')[1];
