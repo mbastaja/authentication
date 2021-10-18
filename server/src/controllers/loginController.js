@@ -1,10 +1,10 @@
 const LoginService = require('../services/loginService')
-const CheckService = require('../services/checkService')
+const CheckUsernameService = require('../services/checkUsernameService')
 // const { resourceLimits } = require('worker_threads')
 
 
 exports.login = (req, res, next) => {
-    CheckService(req.body.username, function (err, result) {
+    CheckUsernameService(req.body.username, function (err, result) {
         if (err) {
             throw err
             return res.status(400).json({ message: err })
