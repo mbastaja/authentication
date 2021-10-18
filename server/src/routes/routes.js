@@ -1,50 +1,25 @@
 const router = require('express').Router()
-const {body} = require('express-validator')
-const {register} = require('../controllers/registerController')
-const {login} = require('../controllers/loginController')
-const {edit} = require('../controllers/editUserController')
-const {getUsers} = require('../controllers/getUsersController')
-const {getUser} = require('../controllers/getUserController')
+const { register } = require('../controllers/registerController')
+const { login } = require('../controllers/loginController')
+const { edit } = require('../controllers/editUserController')
+const { adminEdit } = require('../controllers/adminEditController')
+const { superEdit } = require('../controllers/superEditController')
+const { adminDelete } = require('../controllers/adminDeleteController')
+const { getUsers } = require('../controllers/getUsersController')
+const { getUser } = require('../controllers/getUserController')
+const Validator = require('../middleware/validator')
 
-router.post('/register', [
-    body('username', "The username must be of minimum 5 characters lenght")
-    .notEmpty()
-    .escape()
-    .trim()
-    .isLength({min: 5}),
-    body('email', "The email must be of minimum 5 characters lenght")
-    .notEmpty()
-    .escape()
-    .trim()
-    .isLength({min: 5}),
-    body('fullname', "The email must be of minimum 5 characters lenght")
-    .notEmpty()
-    .escape()
-    .trim()
-    .isLength({min: 5}),
-    body('password', "The password must be of minimum 8 characters")
-    .notEmpty()
-    .trim()
-    .isLength({ min: 8}),
-], register)
-
-// router.post('login', [
-//     body('username', "Invalid username")
-//     .notEmpty()
-//     .escape()
-//     .trim()
-//     .isEmail(),
-//     body('password', "Invalid password")
-//     .notEmpty()
-//     .trim()
-//     .isLength({ min: 8 }),
-// ], login)
+router.post('/register', Validator('registerSchema'), register)
 
 router.post('/login', login)
 
 router.get('/getusers', getUsers)
-router.post('/getuser', getUser)
+router.get('/getuser', getUser)
 
-router.patch('/edit', edit)
+router.patch('/edit', Validator('updateSchema'), edit)
+router.patch('/adminedit', Validator('updateSchema'), adminEdit)
+router.patch('/superedit', Validator('updateSchema'), superEdit)
+
+router.delete('/admindelete/:id', adminDelete)
 
 module.exports = router
