@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const User = require('../models/models')
 const InsertTokenDbService = require('../services/refreshTokenDB/insertTokenDbService')
@@ -14,16 +14,19 @@ function loginUser(param, result) {
             let compare = bcrypt.compare(param.password, hash, (bErr, bResult) => {
                 if (bResult) {
                     let payload = { "id": userId }
-                    let tokens = {
-                        accessToken: '',
-                        refreshToken: '',
+
+                    let accessToken = jwt.sign(payload, 'the-super-strong-secret', { expiresIn: '2h' })
+                    let refreshToken = jwt.sign(payload, 'some-secret-refresh-token-stuff', { expiresIn: '24h' })
+                    const valid = jwt.verify(accessToken, 'the-super-strong-secret')
+
+                    let tokenInfo = {
+                        token: accessToken,
+                        expireAt: valid.exp
                     }
-                    tokens.accessToken = jwt.sign(payload, 'the-super-strong-secret', { expiresIn: '2h' })
-                    tokens.refreshToken = jwt.sign(payload, 'some-secret-refresh-token-stuff', { expiresIn: '24h' })
 
                     let params = {
                         id: userId,
-                        token: tokens.refreshToken
+                        token: refreshToken
                     }
 
                     InsertTokenDbService(params, function (err, res) {
@@ -31,7 +34,7 @@ function loginUser(param, result) {
 
                     })
 
-                    result(null, tokens)
+                    result(null, tokenInfo)
 
 
                 }
