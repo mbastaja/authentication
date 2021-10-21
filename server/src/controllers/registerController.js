@@ -10,7 +10,7 @@ exports.register = async (req, res, next) => {
             throw err
         }
         else if (result[0]) {
-            return res.status(201).json({
+            return res.status(400).json({
                 message: `This username is already in use.`,
             })
         }
@@ -20,7 +20,7 @@ exports.register = async (req, res, next) => {
                     throw err
                 }
                 else if (result[0]) {
-                    return res.status(201).json({
+                    return res.status(403).json({
                         message: `This email address is already in use.`
                     })
                 }
