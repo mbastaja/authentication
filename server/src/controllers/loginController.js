@@ -8,17 +8,23 @@ exports.login = (req, res, next) => {
             throw err
         }
         else if (!result[0]) {
-            return res.status(401).json({ message: 'Email or password is incorrect!' })
+            return res.status(404).json({ message: 'User not found' })
         }
         else {
             LoginService(req.body, function (err, tokens) {
                 if (err) throw err
                 else if (!tokens) {
-                    return res.status(401).json({ message: 'Email or password is incorrect!' })
+                    return res.status(401).json({ message: 'Wrong password' })
 
                 }
                 else{
-                    return res.status(200).json({ message: 'Logged in', tokens, result})
+                    let data = { 
+                        id: result[0].id,
+                        username: result[0].username,
+                        fullname: result[0].fullname,
+                        role: result[0].role
+                    }
+                    return res.status(200).json({ message: 'Logged in', tokens, data})
                 }
             })
         }
