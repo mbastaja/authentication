@@ -38,6 +38,7 @@ async function decodeTokenFromRequest(req, res, next) {
 
                                 jwt.verify(accessToken, 'the-super-strong-secret', function (err, decoded) {
                                     req.decoded = decoded
+                                    res.decoded = decoded
                                     res.tokens = JSON.stringify(accessToken)
                                     next()
                                 })
