@@ -13,7 +13,7 @@ const registerSchema = Joi.object({
         requiredCount: 4
     }),
     email: Joi.string().email(),
-    fullname: Joi.string().pattern(new RegExp('^[A-Z][a-zA-Z]{3,}(?: [A-Z][a-zA-Z]*){0,2}$')).required()
+    fullname: Joi.string().pattern(new RegExp('^[a-zA-Z]{2,40}(?: +[a-zA-Z]{2,40})+$')).required()
 })
 
 const updateSchema = Joi.object({
@@ -21,7 +21,7 @@ const updateSchema = Joi.object({
     username: Joi.string().alphanum(),
     password: new PasswordComplexity({
         min: 6,
-        max: 30,
+        max: 200,
         lowerCase: 1,
         upperCase: 1,
         numeric: 1,
@@ -29,7 +29,7 @@ const updateSchema = Joi.object({
         requiredCount: 4
     }),
     email: Joi.string().email(),
-    fullname: Joi.string().pattern(new RegExp('^[A-Z][a-zA-Z]{3,}(?: [A-Z][a-zA-Z]*){0,2}$')),
+    fullname: Joi.string().pattern(new RegExp('^[a-zA-Z]{2,40}(?: +[a-zA-Z]{2,40})+$')),
     role: Joi.string(),
     accessToken: Joi.string(),
     refreshToken: Joi.string()
