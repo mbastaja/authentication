@@ -2,7 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const errorHandler = require('../server/src/middleware/error-handler');
 const decodeTokenFromRequest = require('../server/src/middleware/decodeTokenFromRequest');
+const cors = require('cors')
 const app = express();
+
+app.use(
+    cors({
+        origin: "http://localhost:8080",
+    })
+)
 
 const port = process.env.PORT || 3000;
 
