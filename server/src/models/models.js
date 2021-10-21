@@ -39,7 +39,7 @@ User.getUsers = (result) => {
     })
 }
 User.getUsername = (username, result) => {
-    conn.query("select * from users where username=?",
+    conn.query("select id, fullname, username, role, password from users where username=?",
         username, function (err, res, fields) {
             if (err) throw err;
             result(null, res);
