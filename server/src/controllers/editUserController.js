@@ -16,7 +16,7 @@ exports.edit = async (req, res, next) => {
         }
     })
     CheckUsernameService(req.body.username, function (err, result) {
-        let usernameDb = result[0].username
+        let usernameDb = ''
         if (err) {
             throw err
         }
@@ -24,10 +24,11 @@ exports.edit = async (req, res, next) => {
             return res.status(201).json({
                 message: `This username is already in use.`,
             })
+            usernameDb = result[0].username
         }
         else if (req.body.username === currentUsername || req.body.username !== usernameDb) {
             CheckEmailService(req.body.email, function (err, result) {
-                let emailDb = result[0].email
+                let emailDb = ''
                 if (err) {
                     throw err
                 }
@@ -35,6 +36,7 @@ exports.edit = async (req, res, next) => {
                     return res.status(201).json({
                         message: `This email address is already in use.`
                     })
+                    emailDb = result[0].email
                 }
                 else if (req.body.email === currentEmail || req.body.email !== emailDb) {
                     EditUserService(req, function (err, user) {
