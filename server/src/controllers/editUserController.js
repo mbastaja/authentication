@@ -21,7 +21,7 @@ exports.edit = async (req, res, next) => {
             throw err
         }
         else if (result[0] && req.body.username !== currentUsername) {
-            return res.status(201).json({
+            return res.status(400).json({
                 message: `This username is already in use.`,
             })
             usernameDb = result[0].username
@@ -33,7 +33,7 @@ exports.edit = async (req, res, next) => {
                     throw err
                 }
                 else if (result[0] && req.body.email !== currentEmail) {
-                    return res.status(201).json({
+                    return res.status(403).json({
                         message: `This email address is already in use.`
                     })
                     emailDb = result[0].email
